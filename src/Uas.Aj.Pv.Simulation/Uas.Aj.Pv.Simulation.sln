@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uas.Aj.Pv.Simulation.Cli", "Uas.Aj.Pv.Simulation.Cli\Uas.Aj.Pv.Simulation.Cli.csproj", "{A145BE46-1473-4BFE-AE5F-BE778AE6371F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uas.Aj.Pv.Simulation.Core", "Uas.Aj.Pv.Simulation.Core\Uas.Aj.Pv.Simulation.Core.csproj", "{5B642E9E-D0B6-4C4A-B71A-122F57979F9A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A145BE46-1473-4BFE-AE5F-BE778AE6371F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A145BE46-1473-4BFE-AE5F-BE778AE6371F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A145BE46-1473-4BFE-AE5F-BE778AE6371F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A145BE46-1473-4BFE-AE5F-BE778AE6371F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B642E9E-D0B6-4C4A-B71A-122F57979F9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B642E9E-D0B6-4C4A-B71A-122F57979F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B642E9E-D0B6-4C4A-B71A-122F57979F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B642E9E-D0B6-4C4A-B71A-122F57979F9A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
