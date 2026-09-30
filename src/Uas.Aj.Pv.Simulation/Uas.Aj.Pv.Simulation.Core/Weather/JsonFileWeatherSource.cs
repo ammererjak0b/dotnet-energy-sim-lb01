@@ -5,7 +5,7 @@ using Uas.Aj.Pv.Simulation.Core.Simulation;
 
 namespace Uas.Aj.Pv.Simulation.Core.Weather;
 
-// reads cached open-meteo json, interpolates hourly values linear
+// reads cached open-meteo json, interpolates hourly values linear, was downloaded outside of this project so i have it locally here.
 public class JsonFileWeatherSource : IWeatherSource
 {
     private readonly List<WeatherSnapshot> hourlySnapshots = new();
@@ -36,13 +36,15 @@ public class JsonFileWeatherSource : IWeatherSource
         var clouds = hourly.GetProperty("cloud_cover");
         var irradiances = hourly.GetProperty("shortwave_radiation");
 
-        for (int index = 0; index < times.GetArrayLength(); index++)
+        int index = 0; // position in the other arrays
+        foreach (var time in times.EnumerateArray())
         {
             hourlySnapshots.Add(new WeatherSnapshot(
-                DateTime.Parse(times[index].GetString()!, CultureInfo.InvariantCulture),
+                DateTime.Parse(time.GetString()!, CultureInfo.InvariantCulture),
                 temperatures[index].GetDouble(),
                 clouds[index].GetDouble(),
                 irradiances[index].GetDouble()));
+            index++;
         }
     }
 
