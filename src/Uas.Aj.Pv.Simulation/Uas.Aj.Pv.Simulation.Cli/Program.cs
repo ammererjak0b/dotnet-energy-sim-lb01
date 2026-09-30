@@ -1,14 +1,34 @@
 using Microsoft.Extensions.DependencyInjection;
+using Uas.Aj.Pv.Simulation.Core.Simulation;
+using Uas.Aj.Pv.Simulation.Core.Weather;
 
 namespace Uas.Aj.Pv.Simulation.Cli;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
+    {
+        var provider = BuildServiceProvider();
+    }
+
+    // register here
+    private static ServiceProvider BuildServiceProvider()
     {
         var services = new ServiceCollection();
-        // device model, simulation clock, csv writer etc. get registered here once they exist
 
-        var provider = services.BuildServiceProvider();
+        // debug defaults until args parsing exists, path relative to working dir (run from repo root)
+        var options = new SimulationOptions(
+            new DateTime(2026, 9, 23),
+            7,
+            TimeSpan.FromMinutes(15),
+            600,
+            "data/salzburg-2026-09-23_2026-09-29.json");
+
+        services.AddSingleton(options);
+        services.AddSingleton<SimulationClock>();
+        services.AddSingleton<IWeatherSource, JsonFileWeatherSource>();
+        // device model, csv writer etc. get registered here once they exist
+
+        return services.BuildServiceProvider();
     }
 }
