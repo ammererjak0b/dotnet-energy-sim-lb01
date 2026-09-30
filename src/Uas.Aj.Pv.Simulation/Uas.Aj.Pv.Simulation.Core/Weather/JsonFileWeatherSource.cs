@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.Json;
+using Ardalis.GuardClauses;
 using Uas.Aj.Pv.Simulation.Core.Simulation;
 
 namespace Uas.Aj.Pv.Simulation.Core.Weather;
@@ -11,7 +12,24 @@ public class JsonFileWeatherSource : IWeatherSource
 
     public JsonFileWeatherSource(SimulationOptions options)
     {
-        using var document = JsonDocument.Parse(File.ReadAllText(options.WeatherFilePath));
+        Guard.Against.NullOrWhiteSpace(options.WeatherFilePath, nameof(options.WeatherFilePath));
+
+        try
+        {
+            LoadHourlySnapshots(options.WeatherFilePath);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or JsonException or KeyNotFoundException or InvalidOperationException or FormatException or IndexOutOfRangeException)
+        {
+            // file missing, no access, broken json, missing field, wrong type, bad date, arrays differ in length
+            throw new InvalidDataException($"cannot read weather file '{options.WeatherFilePath}': {exception.Message}", exception);
+        }
+
+        Guard.Against.NullOrEmpty(hourlySnapshots, nameof(hourlySnapshots));
+    }
+
+    private void LoadHourlySnapshots(string filePath)
+    {
+        using var document = JsonDocument.Parse(File.ReadAllText(filePath));
         var hourly = document.RootElement.GetProperty("hourly");
         var times = hourly.GetProperty("time");
         var temperatures = hourly.GetProperty("temperature_2m");

@@ -6,9 +6,21 @@ namespace Uas.Aj.Pv.Simulation.Cli;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static int Main(string[] args)
     {
         var provider = BuildServiceProvider();
+
+        try
+        {
+            provider.GetRequiredService<IWeatherSource>(); // fail fast, loads the weather file now
+        }
+        catch (InvalidDataException exception)
+        {
+            Console.Error.WriteLine(exception.Message);
+            return 1; // exit code 1 = error
+        }
+
+        return 0;
     }
 
     // register here
