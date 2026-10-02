@@ -8,7 +8,7 @@ namespace Uas.Aj.Pv.Simulation.Core.Weather;
 // reads cached open-meteo json, interpolates hourly values linear, was downloaded outside of this project so i have it locally here.
 public class JsonFileWeatherSource : IWeatherSource
 {
-    private readonly List<WeatherSnapshot> hourlySnapshots = new();
+    private readonly List<WeatherSnapshot> _hourlySnapshots = new();
 
     public JsonFileWeatherSource(SimulationOptions options)
     {
@@ -24,7 +24,7 @@ public class JsonFileWeatherSource : IWeatherSource
             throw new InvalidDataException($"cannot read weather file '{options.WeatherFilePath}': {exception.Message}", exception);
         }
 
-        Guard.Against.NullOrEmpty(hourlySnapshots, nameof(hourlySnapshots));
+        Guard.Against.NullOrEmpty(_hourlySnapshots, nameof(_hourlySnapshots));
     }
 
     private void LoadHourlySnapshots(string filePath)
@@ -39,7 +39,7 @@ public class JsonFileWeatherSource : IWeatherSource
         int index = 0; // position in the other arrays
         foreach (var time in times.EnumerateArray())
         {
-            hourlySnapshots.Add(new WeatherSnapshot(
+            _hourlySnapshots.Add(new WeatherSnapshot(
                 DateTime.Parse(time.GetString()!, CultureInfo.InvariantCulture),
                 temperatures[index].GetDouble(),
                 clouds[index].GetDouble(),
@@ -50,8 +50,8 @@ public class JsonFileWeatherSource : IWeatherSource
 
     public WeatherSnapshot GetWeather(DateTime time)
     {
-        var firstTime = hourlySnapshots[0].Time;
-        var endTime = hourlySnapshots[^1].Time.AddHours(1); // last value covers its whole hour
+        var firstTime = _hourlySnapshots[0].Time;
+        var endTime = _hourlySnapshots[^1].Time.AddHours(1); // last value covers its whole hour
 
         if (time < firstTime || time >= endTime)
         {
@@ -61,13 +61,13 @@ public class JsonFileWeatherSource : IWeatherSource
         double hoursSinceStart = (time - firstTime).TotalHours;
         int lowerIndex = (int)Math.Floor(hoursSinceStart);
 
-        if (lowerIndex >= hourlySnapshots.Count - 1)
+        if (lowerIndex >= _hourlySnapshots.Count - 1)
         {
-            return hourlySnapshots[^1] with { Time = time }; // inside last hour, hold value
+            return _hourlySnapshots[^1] with { Time = time }; // inside last hour, hold value
         }
 
-        var lower = hourlySnapshots[lowerIndex];
-        var upper = hourlySnapshots[lowerIndex + 1];
+        var lower = _hourlySnapshots[lowerIndex];
+        var upper = _hourlySnapshots[lowerIndex + 1];
         double fraction = hoursSinceStart - lowerIndex; // 0-1 between the two hours
 
         return new WeatherSnapshot(

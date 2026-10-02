@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Simulation": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "workingDirectory": "$(ProjectDir)../../.."
+    },
+    "PvPlant check": {
+      "commandName": "Project",
+      "commandLineArgs": "--check",
+      "workingDirectory": "$(ProjectDir)../../.."
+    }
+  }
+}

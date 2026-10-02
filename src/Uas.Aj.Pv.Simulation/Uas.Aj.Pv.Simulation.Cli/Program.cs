@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Uas.Aj.Pv.Simulation.Core.Device;
 using Uas.Aj.Pv.Simulation.Core.Simulation;
 using Uas.Aj.Pv.Simulation.Core.Weather;
 
@@ -20,6 +21,11 @@ internal class Program
             return 1; // exit code 1 = error
         }
 
+        if (args.Contains("--check"))
+        {
+            return provider.GetRequiredService<PvPlantCheck>().Run(); // pv model smoke check, no simulation
+        }
+
         return 0;
     }
 
@@ -39,7 +45,10 @@ internal class Program
         services.AddSingleton(options);
         services.AddSingleton<SimulationClock>();
         services.AddSingleton<IWeatherSource, JsonFileWeatherSource>();
-        // device model, csv writer etc. get registered here once they exist
+        services.AddSingleton(new PvPlantConfig("pv-01", 5)); // debug default until args parsing exists
+        services.AddSingleton<PvPlant>();
+        services.AddTransient<PvPlantCheck>();
+        // csv writer etc. get registered here once they exist
 
         return services.BuildServiceProvider();
     }
