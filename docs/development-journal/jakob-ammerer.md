@@ -10,6 +10,13 @@ Verpflichtende Tags pro Eintrag:
 Optionale Tags bei Relevanz:
 - Comment: Entscheidung, Problem, Erkenntnis oder nächster Schritt.
 - Test: Durchgeführter manueller oder automatisierter Test.
+
+- KI: Usage Infos:
+ - Used to add the artifacts section
+ - Tried to work with it the same way as i work with it in the company
+ - Formatting console output & exception messages
+ - Used for repetitive Coding Tasks
+
 -->
 
 ## 09/28/26: 
@@ -24,7 +31,7 @@ Optionale Tags bei Relevanz:
     - Research about what a PV does and what would make sense to simulate
     - Json File with wheater data for 1 week, made a class which inherits form IWeatherService for specific wheater from json wheater implementation
 
-- KI: Claude  Sonnet 5 => research about what the PV's does and what worth simulating
+- KI: Claude  Sonnet 5 => research about what the PV's does and what worth simulating, Added Exception Handling with Claude Code
 
 - Artefact: `data/salzburg-2026-09-23_2026-09-29.json`, `Core/Weather/` (`WeatherSnapshot`, `IWeatherSource`, `JsonFileWeatherSource`), `Core/Simulation/` (`SimulationClock`, `SimulationOptions`), `Cli/Program.cs`.
 
@@ -36,10 +43,22 @@ Optionale Tags bei Relevanz:
 
 - Artefacts: `Core/Device/` (`PvPlant.cs`, `PvPlantConfig.cs`, `PvPlantStatus.cs`), `Cli/PvPlantCheck.cs`, `Cli/Properties/launchSettings.json`, `Cli/Program.cs`
 
-# 04/10/26
+## 04/10/26
 
-- Done
+- Done: Reworked Exception handling, did not like the initial approach with the catch all style. Now Exceptions are there, where they could happen and get handled there. Added SimulationEngine, AutoMode and Manual Mode 
 
-- KI:
+- KI Claude Sonnet 5 and Opus 5: 
+  - Used to apply the exceptions the way I wanted it. SimulationEngine.cs
+  - gave me the formulas for the cloud drift in auto mode and for how clouds reduce the sunlight. I decided on slow drift instead of pure random and on no seed like the instructions in pdf said "moeglichst realitätsnah". Also helped with implementation of the decorator Pattern. Tested and approved by me.
 
-- Artefacts:
+- Artefacts: `Core/Simulation/SimulationEngine.cs`, `Core/Weather/` (`AdjustableWeatherSource.cs`, `WeatherMode.cs`, `JsonFileWeatherSource.cs`), `Cli/PvPlantCheck.cs` (engine + weather cases), `Cli/Program.cs` (DI)
+
+## 04/10/26
+
+- Done:
+ - CSV history mgmt: one line per tick with time, mode, status, power, energy, power limit, irradiance, clouds, temperature
+  - ';' + decimal comma so it opens clean in libre office
+  - new file per run in /data/run folder
+- KI: 
+ - implemented `HistoryRow`, `IHistoryWriter`, `CsvHistoryWriter` and the check cases from the plan in my notes (columns, one row per tick, file per run)
+- Artefacts: `Core/History/` (`HistoryRow.cs`, `IHistoryWriter.cs`), `Cli/CsvHistoryWriter.cs`, `Core/Simulation/SimulationEngine.cs` (writes row per tick), `Core/Simulation/SimulationOptions.cs` (`HistoryFolderPath`), `Core/Weather/WeatherSnapshot.cs` (`Mode`), `Cli/PvPlantCheck.cs` (history + csv cases), `Cli/Program.cs` (DI)

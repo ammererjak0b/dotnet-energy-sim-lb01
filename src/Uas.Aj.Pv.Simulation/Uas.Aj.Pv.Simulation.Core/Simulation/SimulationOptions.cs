@@ -6,5 +6,6 @@ public record SimulationOptions(
     int Days,
     TimeSpan Step, // simulated time per tick
     double Speed, // 1 = realtime
-    string WeatherFilePath
+    string WeatherFilePath,
+    string HistoryFolderPath = "data/runs" // csv per run lands here
 );
