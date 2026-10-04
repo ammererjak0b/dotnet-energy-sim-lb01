@@ -1,4 +1,4 @@
-27;2;13~# Entwicklungsjournal – Jakob Ammerer
+# Entwicklungsjournal – Jakob Ammerer
 
 <!--
 Verpflichtende Tags pro Eintrag:
@@ -24,14 +24,22 @@ Optionale Tags bei Relevanz:
     - Research about what a PV does and what would make sense to simulate
     - Json File with wheater data for 1 week, made a class which inherits form IWeatherService for specific wheater from json wheater implementation
 
-- KI: Claude Sonnet 5 => research about what the PV's does and what worth simulating
+- KI: Claude  Sonnet 5 => research about what the PV's does and what worth simulating
 
 - Artefact: `data/salzburg-2026-09-23_2026-09-29.json`, `Core/Weather/` (`WeatherSnapshot`, `IWeatherSource`, `JsonFileWeatherSource`), `Core/Simulation/` (`SimulationClock`, `SimulationOptions`), `Cli/Program.cs`.
 
-## 03/10/26:
+## 02/10/26 - 03/10/26:
 
 - Done: PV plant model (power from irradiance (bestrahlung) + temperature, power limit, fault, on/off, daily/total energy), --check for  manual testing, debug profile
 
-- KI: Claude Sonnet 5 => formatting console output, ideas and information on the pvplant. Helping me to figure out how a PV plant model should work. Used grill-me skill on that specific thing. 
+- KI: Claude Sonnet 5 => formatting console output, ideas and information on the pvplant. Helping me to figure out how a PV plant model should work. Used grill-me skill on that specific thing. e.g formulas, states which i discussed in my notes 
 
 - Artefacts: `Core/Device/` (`PvPlant.cs`, `PvPlantConfig.cs`, `PvPlantStatus.cs`), `Cli/PvPlantCheck.cs`, `Cli/Properties/launchSettings.json`, `Cli/Program.cs`
+
+# 04/10/26
+
+- Done
+
+- KI:
+
+- Artefacts:
