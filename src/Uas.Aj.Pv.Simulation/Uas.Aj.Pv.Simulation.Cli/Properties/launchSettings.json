@@ -1,9 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Simulation": {
+    "Simulation manual": {
       "commandName": "Project",
       "commandLineArgs": "",
+      "workingDirectory": "$(ProjectDir)../../.."
+    },
+    "Simulation auto (2500x)": {
+      "commandName": "Project",
+      "commandLineArgs": "--speed 2500",
+      "workingDirectory": "$(ProjectDir)../../.."
+    },
+    "Help": {
+      "commandName": "Project",
+      "commandLineArgs": "--help",
       "workingDirectory": "$(ProjectDir)../../.."
     },
     "PvPlant check": {

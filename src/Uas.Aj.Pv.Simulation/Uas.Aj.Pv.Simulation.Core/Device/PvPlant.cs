@@ -10,13 +10,13 @@ public class PvPlant
     private const double PowerLossPerKelvin = 0.004; // -0.4 % per K above 25 C
     private const double ReferenceCellTemperature = 25;
 
-    private bool _isOn = true;
-    private bool _hasFault;
     private bool _isLimited; // limit cut power in last update
     private double _irradiance; // last seen, W/m2
     private DateTime? _currentDay; // for daily energy reset
 
     public PvPlantConfig Config { get; }
+    public bool IsOn { get; private set; } = true; // switched on by user
+    public bool HasFault { get; private set; } // inverter fault active
     public double PowerLimitPercent { get; private set; } = 100;
     public double PowerKw { get; private set; }
     public double EnergyTodayKwh { get; private set; }
@@ -26,12 +26,12 @@ public class PvPlant
     {
         get
         {
-            if (_hasFault)
+            if (HasFault)
             {
                 return PvPlantStatus.Fault;
             }
 
-            if (!_isOn)
+            if (!IsOn)
             {
                 return PvPlantStatus.Off;
             }
@@ -80,22 +80,22 @@ public class PvPlant
 
     public void TurnOn()
     {
-        _isOn = true;
+        IsOn = true;
     }
 
     public void TurnOff()
     {
-        _isOn = false;
+        IsOn = false;
     }
 
     public void TriggerFault()
     {
-        _hasFault = true;
+        HasFault = true;
     }
 
     public void ResetFault()
     {
-        _hasFault = false;
+        HasFault = false;
     }
 
     public void SetPowerLimit(double percent)
@@ -109,7 +109,7 @@ public class PvPlant
     {
         _isLimited = false;
 
-        if (!_isOn || _hasFault)
+        if (!IsOn || HasFault)
         {
             return 0;
         }

@@ -26,10 +26,10 @@ public class SimulationClock
         SetSpeed(options.Speed);
     }
 
-    // one tick forward, does nothing while paused or after the end
+    // one tick forward, does nothing after the end
     public void Advance()
     {
-        if (IsPaused || IsFinished)
+        if (IsFinished) // pause is checked by the engine, so single steps work while paused
         {
             return;
         }
