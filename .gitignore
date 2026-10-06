@@ -433,3 +433,6 @@ FodyWeavers.xsd
 
 # Official VS Code C# Dev Kit Extension exclusion
 #*.lscache
+
+# KDE Dolphin folder settings
+.directory
