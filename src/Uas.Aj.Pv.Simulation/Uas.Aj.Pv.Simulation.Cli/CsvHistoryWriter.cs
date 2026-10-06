@@ -14,6 +14,7 @@ internal sealed class CsvHistoryWriter : IHistoryWriter, IDisposable
     private StreamWriter? _writer; // opened on first row -> no empty files from --check or failed starts
 
     public string FilePath { get; }
+    public bool HasFile => _writer != null; // false until the first row
 
     public CsvHistoryWriter(SimulationOptions options, PvPlantConfig config)
     {
